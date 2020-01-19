@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String[] items = null;
 
     public String[] convertIteratorToArray(Iterator<String> iterator) {
-    ArrayList<String> list = new ArrayList<String>();
-    // Add each element of iterator to the List
-      iterator.forEachRemaining(list::add);
+        ArrayList<String> list = new ArrayList<String>();
+        // Add each element of iterator to the List
+        iterator.forEachRemaining(list::add);
 
     String arr[] = new String[list.size()];
 
@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
+
 
         //Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);

@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -16,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -39,8 +42,10 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -59,11 +64,15 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
     private String manufacturer;
     private String decodedID;
     private int quantities;
+    private String status;
+    private String colour;
+    private String otherColours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture_barcode);
+        getSupportActionBar().hide();
 
         // Get variables from main activity, where this activity is called.
         Intent intent = getIntent();
@@ -104,7 +113,8 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                     itemQuantity.setText("Quantity: " + (--quantities));
                 }
                 if (quantities < 1) {
-                    itemStatus.setText("Status: Not Available Online");
+                    String text = "Status: <font color='red'>Not "+status+"</font>";
+                    itemStatus.setText(Html.fromHtml(text,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
                 }
 
                 break;
@@ -423,18 +433,6 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
             Log.i("test", "Entered");
 
-            result.setVisibility(View.VISIBLE);
-            itemName.setVisibility(View.VISIBLE);
-            itemDescription.setVisibility(View.VISIBLE);
-            itemQuantity.setVisibility(View.VISIBLE);
-            itemColour.setVisibility(View.VISIBLE);
-            itemReview.setVisibility(View.VISIBLE);
-            itemStatus.setVisibility(View.VISIBLE);
-            itemPrice.setVisibility(View.VISIBLE);
-            itemSize.setVisibility(View.VISIBLE);
-            itemOtherColours.setVisibility(View.VISIBLE);
-            buttonCheckOut.setVisibility(View.VISIBLE);
-
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
             String url ="http://10.35.129.199:5000/products";
@@ -444,19 +442,51 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            String text;
+
+                            result.setVisibility(View.VISIBLE);
+                            itemName.setVisibility(View.VISIBLE);
+                            itemDescription.setVisibility(View.VISIBLE);
+                            itemQuantity.setVisibility(View.VISIBLE);
+                            itemColour.setVisibility(View.VISIBLE);
+                            itemReview.setVisibility(View.VISIBLE);
+                            itemStatus.setVisibility(View.VISIBLE);
+                            itemPrice.setVisibility(View.VISIBLE);
+                            itemSize.setVisibility(View.VISIBLE);
+                            itemOtherColours.setVisibility(View.VISIBLE);
+                            buttonCheckOut.setVisibility(View.VISIBLE);
+
                             // Display the first 500 characters of the response string.
-                            Log.i("test", "Response is: "+ response.substring(0,500));
+                            Log.i("test", "Response is: " + response.substring(0, 500));
                             quantities = Integer.parseInt(getQuantity(response, manufacturer, decodedID));
+                            status = getStatus(response, manufacturer, decodedID);
+                            colour = getColour(response, manufacturer, decodedID);
+                            otherColours = getOtherColours(response, manufacturer, decodedID);
                             itemName.setText("Name: " + getName(response, manufacturer, decodedID));
                             itemDescription.setText("Description: " + getDescription(response, manufacturer, decodedID));
                             itemQuantity.setText("Quantity: " + quantities);
-                            itemColour.setText("Colour: " + getColour(response, manufacturer, decodedID));
                             itemReview.setText("Review: " + getReview(response, manufacturer, decodedID));
-                            itemStatus.setText("Status: " + getStatus(response, manufacturer, decodedID));
                             itemPrice.setText("Price: " + getPrice(response, manufacturer, decodedID));
                             itemSize.setText("Size: " + getSize(response, manufacturer, decodedID));
                             itemOtherColours.setText("Available Colours: " + getOtherColours(response, manufacturer, decodedID));
                             Picasso.get().load(getImageURL(response, manufacturer, decodedID)).into(imageView);
+
+                            // Further rendering
+                            if (status.equals("Available Online")) {
+                                text = "Status: <font color='green'>"+status+"</font>";
+                                itemStatus.setText(Html.fromHtml(text,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+
+                            } else {
+                                text = "Status: <font color='red'>"+status+"</font>";
+                                itemStatus.setText(Html.fromHtml(text,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+                            }
+                            if (colour.equals("Orange")) {
+                                text = "Status: <font color='#FFA500'>"+colour+"</font>";
+                            } else {
+                                text = "Status: <font color='"+colour+"'>"+colour+"</font>";
+                            }
+
+                            itemColour.setText(Html.fromHtml(text,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
 
                         }
                     }, new Response.ErrorListener() {

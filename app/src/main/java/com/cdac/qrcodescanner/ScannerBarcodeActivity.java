@@ -35,6 +35,8 @@ public class ScannerBarcodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner_barcode);
+        getSupportActionBar().hide();
+
         initComponents();
     }
 
