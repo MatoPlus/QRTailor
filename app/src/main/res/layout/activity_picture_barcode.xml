@@ -121,8 +121,34 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#FFFFFF"
+        android:shadowColor="#E6000000"
+        android:shadowDx="100"
+        android:shadowDy="100"
+        android:shadowRadius="10"
+        android:textColor="#054875"
+        android:textStyle="bold"
         android:text="@string/open_camera" />
+
+    <Button
+        android:id="@+id/buttonCheckOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#FFFFFF"
+        android:shadowColor="#E6000000"
+        android:shadowDx="100"
+        android:shadowDy="100"
+        android:shadowRadius="10"
+        android:textColor="#054875"
+        android:textStyle="bold"
+        android:text="@string/check_out"
+        android:visibility="invisible" />
 
 </RelativeLayout>

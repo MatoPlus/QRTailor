@@ -19,13 +19,16 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ScannerBarcodeActivity"
                 android:label="@string/scan_barcode"
+                android:screenOrientation="portrait"
             />
         <activity android:name=".PictureBarcodeActivity"
             android:label="@string/take_barcode_picture"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

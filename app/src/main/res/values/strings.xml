@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">QRTailor</string>
-    <string name="take_barcode_picture">Take Barcode Picture</string>
+    <string name="take_barcode_picture">Scan Product</string>
     <string name="scan_barcode">Scan Barcode</string>
     <string name="open_camera">OPEN CAMERA</string>
     <string name="intro">Select your store and scan an item for product details!</string>
     <string name="search">Search</string>
+    <string name="check_out">Check Out</string>
     </resources>

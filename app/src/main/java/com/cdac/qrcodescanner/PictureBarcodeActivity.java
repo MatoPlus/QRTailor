@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
     private static final String TAG = "QR_CODE_SCANNER";
     private String manufacturer;
     private String decodedID;
+    private int quantities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
         textViewResultBody = findViewById(R.id.itemName);
         imageView = findViewById(R.id.imageView);
         findViewById(R.id.buttonOpenCamera).setOnClickListener(this);
+        findViewById(R.id.buttonCheckOut).setOnClickListener(this);
 
         detector = new BarcodeDetector.Builder(getApplicationContext())
                 .setBarcodeFormats(Barcode.DATA_MATRIX | Barcode.QR_CODE)
@@ -92,12 +95,25 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.buttonCheckOut:
+                Log.i("test", "checking out");
+                final TextView itemQuantity = findViewById(R.id.itemQuantity);
+                final TextView itemStatus = findViewById(R.id.itemStatus);
+
+                if(quantities > 0) {
+                    itemQuantity.setText("Quantity: " + (--quantities));
+                }
+                if (quantities < 1) {
+                    itemStatus.setText("Status: Not Available Online");
+                }
+
+                break;
             case R.id.buttonOpenCamera:
-
-
+                Log.i("test", "camera");
                 ActivityCompat.requestPermissions(PictureBarcodeActivity.this, new
                         String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                 break;
+
         }
     }
 
@@ -330,8 +346,31 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
     private void setBarCode(SparseArray<Barcode> barCodes){
 
+        final TextView result = findViewById(R.id.textViewResultsHeader);
+        final TextView itemName = findViewById(R.id.itemName);
+        final TextView itemDescription = findViewById(R.id.itemDescription);
+        final TextView itemQuantity = findViewById(R.id.itemQuantity);
+        final TextView itemColour = findViewById(R.id.itemColour);
+        final TextView itemReview = findViewById(R.id.itemReview);
+        final TextView itemStatus = findViewById(R.id.itemStatus);
+        final TextView itemPrice = findViewById(R.id.itemPrice);
+        final TextView itemSize = findViewById(R.id.itemSize);
+        final TextView itemOtherColours = findViewById(R.id.itemOtherColours);
+        final Button buttonCheckOut = findViewById(R.id.buttonCheckOut);
+
         if (barCodes.size() == 0) {
             textViewResultBody.setText("No barcode could be detected. Please try again.");
+            result.setVisibility(View.INVISIBLE);
+            itemName.setVisibility(View.INVISIBLE);
+            itemDescription.setVisibility(View.INVISIBLE);
+            itemQuantity.setVisibility(View.INVISIBLE);
+            itemReview.setVisibility(View.INVISIBLE);
+            itemStatus.setVisibility(View.INVISIBLE);
+            itemPrice.setVisibility(View.INVISIBLE);
+            itemSize.setVisibility(View.INVISIBLE);
+            itemOtherColours.setVisibility(View.INVISIBLE);
+            buttonCheckOut.setVisibility(View.INVISIBLE);
+
             return;
         }
         for (int index = 0; index < barCodes.size(); index++) {
@@ -384,17 +423,6 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
             Log.i("test", "Entered");
 
-            final TextView result = findViewById(R.id.textViewResultsHeader);
-            final TextView itemName = findViewById(R.id.itemName);
-            final TextView itemDescription = findViewById(R.id.itemDescription);
-            final TextView itemQuantity = findViewById(R.id.itemQuantity);
-            final TextView itemColour = findViewById(R.id.itemColour);
-            final TextView itemReview = findViewById(R.id.itemReview);
-            final TextView itemStatus = findViewById(R.id.itemStatus);
-            final TextView itemPrice = findViewById(R.id.itemPrice);
-            final TextView itemSize = findViewById(R.id.itemSize);
-            final TextView itemOtherColours = findViewById(R.id.itemOtherColours);
-
             result.setVisibility(View.VISIBLE);
             itemName.setVisibility(View.VISIBLE);
             itemDescription.setVisibility(View.VISIBLE);
@@ -405,6 +433,7 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
             itemPrice.setVisibility(View.VISIBLE);
             itemSize.setVisibility(View.VISIBLE);
             itemOtherColours.setVisibility(View.VISIBLE);
+            buttonCheckOut.setVisibility(View.VISIBLE);
 
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -417,9 +446,10 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                         public void onResponse(String response) {
                             // Display the first 500 characters of the response string.
                             Log.i("test", "Response is: "+ response.substring(0,500));
+                            quantities = Integer.parseInt(getQuantity(response, manufacturer, decodedID));
                             itemName.setText("Name: " + getName(response, manufacturer, decodedID));
                             itemDescription.setText("Description: " + getDescription(response, manufacturer, decodedID));
-                            itemQuantity.setText("Quantity: " + getQuantity(response, manufacturer, decodedID));
+                            itemQuantity.setText("Quantity: " + quantities);
                             itemColour.setText("Colour: " + getColour(response, manufacturer, decodedID));
                             itemReview.setText("Review: " + getReview(response, manufacturer, decodedID));
                             itemStatus.setText("Status: " + getStatus(response, manufacturer, decodedID));
