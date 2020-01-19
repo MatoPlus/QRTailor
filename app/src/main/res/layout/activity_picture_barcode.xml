@@ -22,7 +22,8 @@
         android:layout_centerHorizontal="true"
         android:text="Results"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/itemName"
@@ -31,7 +32,8 @@
         android:layout_below="@+id/textViewResultsHeader"
         android:layout_marginTop="15dp"
         android:gravity="center"
-        android:text="Name: Blue Shoe" />
+        android:text="Name: Blue Shoe"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/itemDescription"
@@ -40,7 +42,8 @@
         android:layout_below="@+id/itemName"
         android:layout_marginTop="15dp"
         android:gravity="center"
-        android:text="Description: Blue Shoe" />
+        android:text="Description: Blue Shoe"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/itemQuantity"
@@ -49,6 +52,7 @@
         android:layout_below="@id/itemSize"
         android:layout_marginTop="15dp"
         android:gravity="center"
+        android:visibility="invisible"
         android:text="Quantity: Blue Shoe" />
 
     <TextView
@@ -58,6 +62,7 @@
         android:layout_below="@+id/itemQuantity"
         android:layout_marginTop="15dp"
         android:gravity="center"
+        android:visibility="invisible"
         android:text="Colours: Blue" />
 
     <TextView
@@ -67,6 +72,7 @@
         android:layout_below="@id/itemPrice"
         android:layout_marginTop="15dp"
         android:gravity="center"
+        android:visibility="invisible"
         android:text="Review: 5/10" />
 
     <TextView
@@ -76,6 +82,7 @@
         android:layout_below="@id/itemReview"
         android:layout_marginTop="15dp"
         android:gravity="center"
+        android:visibility="invisible"
         android:text="Status: Available Online" />
 
     <TextView
@@ -85,6 +92,7 @@
         android:layout_below="@id/itemOtherColours"
         android:layout_marginTop="15dp"
         android:gravity="center"
+        android:visibility="invisible"
         android:text="Price: $5.00" />
 
     <TextView
@@ -94,6 +102,7 @@
         android:layout_below="@id/itemDescription"
         android:layout_marginTop="15dp"
         android:gravity="center"
+        android:visibility="invisible"
         android:text="Size" />
 
     <TextView
@@ -103,6 +112,7 @@
         android:layout_below="@id/itemColour"
         android:layout_marginTop="15dp"
         android:gravity="center"
+        android:visibility="invisible"
         android:text="OtherColours" />
 
     <Button

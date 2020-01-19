@@ -223,6 +223,85 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
         return "";
 
     }
+    private String getReview(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String review = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("review");
+            Log.i("json", review);
+            return review;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
+    private String getStatus(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String status = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("online");
+            Log.i("json", status);
+            return status;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
+    private String getPrice(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String price = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("price");
+            Log.i("json", price);
+            return price;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
+    private String getSize(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String size = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("size");
+            Log.i("json", size);
+            return size;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
+    private String getOtherColours(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String colours = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("otherColours");
+            Log.i("json", colours);
+            return colours;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
 
     private String getImageURL(String response, String manufacturer, String itemID) {
 
@@ -296,10 +375,27 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
             Log.i("test", "Entered");
 
+            final TextView result = findViewById(R.id.textViewResultsHeader);
             final TextView itemName = findViewById(R.id.itemName);
             final TextView itemDescription = findViewById(R.id.itemDescription);
             final TextView itemQuantity = findViewById(R.id.itemQuantity);
             final TextView itemColour = findViewById(R.id.itemColour);
+            final TextView itemReview = findViewById(R.id.itemReview);
+            final TextView itemStatus = findViewById(R.id.itemStatus);
+            final TextView itemPrice = findViewById(R.id.itemPrice);
+            final TextView itemSize = findViewById(R.id.itemSize);
+            final TextView itemOtherColours = findViewById(R.id.itemOtherColours);
+
+            result.setVisibility(View.VISIBLE);
+            itemName.setVisibility(View.VISIBLE);
+            itemDescription.setVisibility(View.VISIBLE);
+            itemQuantity.setVisibility(View.VISIBLE);
+            itemColour.setVisibility(View.VISIBLE);
+            itemReview.setVisibility(View.VISIBLE);
+            itemStatus.setVisibility(View.VISIBLE);
+            itemPrice.setVisibility(View.VISIBLE);
+            itemSize.setVisibility(View.VISIBLE);
+            itemOtherColours.setVisibility(View.VISIBLE);
 
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -316,6 +412,11 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                             itemDescription.setText("Description: " + getDescription(response, manufacturer, decodedID));
                             itemQuantity.setText("Quantity: " + getQuantity(response, manufacturer, decodedID));
                             itemColour.setText("Colour: " + getColour(response, manufacturer, decodedID));
+                            itemReview.setText("Review: " + getReview(response, manufacturer, decodedID));
+                            itemStatus.setText("Status: " + getStatus(response, manufacturer, decodedID));
+                            itemPrice.setText("Price: " + getPrice(response, manufacturer, decodedID));
+                            itemSize.setText("Size: " + getSize(response, manufacturer, decodedID));
+                            itemOtherColours.setText("Available Colours: " + getOtherColours(response, manufacturer, decodedID));
                             Picasso.get().load(getImageURL(response, manufacturer, decodedID)).into(imageView);
 
                         }
