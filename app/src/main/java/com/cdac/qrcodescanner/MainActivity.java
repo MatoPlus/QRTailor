@@ -18,16 +18,34 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private String[] items = null;
+
+    public String[] convertIteratorToArray(Iterator<String> iterator) {
+    ArrayList<String> list = new ArrayList<String>();
+    // Add each element of iterator to the List
+      iterator.forEachRemaining(list::add);
+
+    String arr[] = new String[list.size()];
+
+      for(int i = 0; i < list.size(); ++i) {
+        arr[i] = list.get(i);
+    }
+
+    // Return the List
+      return arr;
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        String[] items = new String[]{"Hollister", "Nike", "Tommy Hilfiger"};
 
         //Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -42,7 +60,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         try {
                             JSONObject obj = new JSONObject(response);
                             Iterator<String> keys = obj.keys();
-                            Log.i("test", keys.next());
+
+//                            while (keys.hasNext()) {
+//                                Log.i("json", keys.next());
+//                            }
+
+                            items = convertIteratorToArray(keys);
+
+                            //get the spinner from the xml.
+                            Spinner dropdown = findViewById(R.id.spinner);
+                            //create a list of items for the spinner.
+
+
+                            //create an adapter to describe how the items are displayed, adapters are used in several places in android.
+                            //There are multiple variations of this, but this is the basic variant.
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.super.getApplication(), android.R.layout.simple_spinner_dropdown_item, items);
+
+                            //set the spinners adapter to the previously created one.
+                            dropdown.setAdapter(adapter);
+
+                            initComponents();
+
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
@@ -55,21 +93,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
-        //get the spinner from the xml.
-        Spinner dropdown = findViewById(R.id.spinner);
-        //create a list of items for the spinner.
-
-        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
-        //There are multiple variations of this, but this is the basic variant.
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-
-        //set the spinners adapter to the previously created one.
-        dropdown.setAdapter(adapter);
-
-        initComponents();
     }
 
     private void initComponents(){
