@@ -24,11 +24,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.api.Response;
+//import com.google.android.gms.common.api.Response;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
@@ -71,6 +73,8 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.buttonOpenCamera:
+
+
                 ActivityCompat.requestPermissions(PictureBarcodeActivity.this, new
                         String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                 break;
@@ -151,7 +155,7 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
         }
         for (int index = 0; index < barCodes.size(); index++) {
             Barcode code = barCodes.valueAt(index);
-            textViewResultBody.setText(textViewResultBody.getText() + "\n" + code.displayValue + "\n");
+            textViewResultBody.setText(code.displayValue);
             copyToClipBoard(code.displayValue);
             int type = barCodes.valueAt(index).valueFormat;
             switch (type) {
@@ -196,6 +200,34 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                     break;
             }
 
+            Log.i("test", "Entered");
+
+            final TextView textView = (TextView) findViewById(R.id.itemDescription);
+            // ...
+
+            // Instantiate the RequestQueue.
+            RequestQueue queue = Volley.newRequestQueue(this);
+            String url ="http://10.35.129.199:5000/products";
+
+            // Request a string response from the provided URL.
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            // Display the first 500 characters of the response string.
+                            textView.setText("Response is: "+ response.substring(0,500));
+                            Log.i("test", "Response is: "+ response.substring(0,500));
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    textView.setText("That didn't work!");
+                    Log.i("test", "Didn't work");
+                }
+            });
+
+            // Add the request to the RequestQueue.
+            queue.add(stringRequest);
         }
     }
 
