@@ -468,7 +468,7 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                             itemReview.setText("Review: " + getReview(response, manufacturer, decodedID));
                             itemPrice.setText("Price: " + getPrice(response, manufacturer, decodedID));
                             itemSize.setText("Size: " + getSize(response, manufacturer, decodedID));
-                            itemOtherColours.setText("Available Colours: " + getOtherColours(response, manufacturer, decodedID));
+//                            itemOtherColours.setText("Available Colours: " + getOtherColours(response, manufacturer, decodedID));
                             Picasso.get().load(getImageURL(response, manufacturer, decodedID)).into(imageView);
 
                             // Further rendering
@@ -487,6 +487,28 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                             }
 
                             itemColour.setText(Html.fromHtml(text,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+
+                            String[] colourList = otherColours.split(", ");
+                            text = "Available Colours: ";
+                            for (int i = 0; i < colourList.length-1; ++i) {
+                                Log.i("colour", colourList[i]);
+                                if (colourList[i].equals("Orange")) {
+                                    text += "<font color='#FFA500'>" + colourList[i] + "</font>, ";
+                                }
+                                else {
+                                    text += "<font color='" + colourList[i] + "'>" + colourList[i] + "</font>, ";
+                                }
+                            }
+                            if (colour.equals("Orange")) {
+                                text += "<font color='#FFA500'>" + colourList[colourList.length-1] + "</font>";
+                            }
+                            else {
+                                text += "<font color='" + colourList[colourList.length-1] + "'>" + colourList[colourList.length-1] + "</font>";
+
+                            }
+
+                            itemOtherColours.setText(Html.fromHtml(text,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
+
 
                         }
                     }, new Response.ErrorListener() {
