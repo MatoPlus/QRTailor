@@ -36,6 +36,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.File;
 import java.io.FileNotFoundException;
+import org.json.*;
 
 public class PictureBarcodeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -148,6 +149,38 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
         }
     }
 
+    private String getDescription(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String description = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("description");
+            Log.i("json", description);
+            return description;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
+    private String getColour(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String description = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("colour");
+            Log.i("json", description);
+            return description;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+        
+        return "";
+
+    }
+
     private void setBarCode(SparseArray<Barcode> barCodes){
         if (barCodes.size() == 0) {
             textViewResultBody.setText("No barcode could be detected. Please try again.");
@@ -202,8 +235,11 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
             Log.i("test", "Entered");
 
-            final TextView textView = (TextView) findViewById(R.id.itemDescription);
-            // ...
+            final TextView itemDescription = findViewById(R.id.itemDescription);
+//            final TextView itemQuantity = findViewById(R.id.itemDescription);
+//            final TextView itemColour = findViewById(R.id.itemDescription);
+//            final TextView itemDescription = findViewById(R.id.itemDescription);
+
 
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -215,19 +251,21 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                         @Override
                         public void onResponse(String response) {
                             // Display the first 500 characters of the response string.
-                            textView.setText("Response is: "+ response.substring(0,500));
                             Log.i("test", "Response is: "+ response.substring(0,500));
+                            itemDescription.setText(getDescription(response, "hollister", "0"));
+
+
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    textView.setText("That didn't work!");
                     Log.i("test", "Didn't work");
                 }
             });
 
             // Add the request to the RequestQueue.
             queue.add(stringRequest);
+
         }
     }
 
