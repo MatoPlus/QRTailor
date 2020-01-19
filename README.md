@@ -1,31 +1,21 @@
 ##  QRTailor
+![Logo](img/QRTailor.png)
 
-![Logo](img/QRTailor.png)QR Code scanner app to extract additional information from a specific product regarding its feature (e.g. stock number, availability)
+QR Code scanner app used by employees to extract additional information from a specific product regarding its features (e.g. stock number, available colours)
 
-### Unsatisfied Customer Needs
+### What It Is
 
-Customers often states that if they had more information at the point of purchase, they would more often purchase sustainable products. However, brands/stores struggle to provide this information. Now, QRTailor App uses effective medium communication to target this customer needs  and promote sustainability in easy ways:
+  QR Code scanner app used by employees to instantly extract additional information from a specific product regarding its feature (e.g. stock number, available colours, reviews).
 
-* By directly providing material details, customers are able to know about the sustanable level of the product quickly and clearly
-* With more information (e.g. colours) and alternatives provided, consumer can do decision rationally and prevent impulse shopping
+### How We Made It
 
-### Monetized B2B Commerce
+  QRTailor is an android app built on Android Studio. WIth the use of Firebase, we are able to read and interpret the QR Code. Futrthermore, we made an API call and hosted a local server with the front-end framework Flask written in Python. As for our database, our raw data mainly came from .json file, which was parsed through an API called org.json in Android Studio. 
 
-With QRTailor's target customers being large retail/clothing stores (e.g. Nike), our app breaks the wall between the consumer and the business, and allows the true nature of the products to be transparent. This makes QRTailor appealing to its customers (businesses) as it targets their core needs and provide unique benefits:
+  What's more, we also created a Figma program that details how our ideal program would look like with an advanced GUI (graphic user interface).
 
-* Businesses are able to be certifivcated as an ethical and eco-friendly companies with the use of this product, helping them maintaining and promoting Corporate Social Responsibility
-* This also shows that they are actually putting the customer first. They might lose money in the short term; however, they are more likely to get more shares and revenues in the long term because of the increased reputation
-*  Also, according to data, a company’s profit actually decreases when the returns and damaged items increase due to the increased cost in customer service and cost of sales. Well, QRTailor is able to decrease the number of returns to a large extent, which helps companies increase their profit. Therefore, QRTailor targets its customers’ (businesses) needs and is promisingly monetized. 
+### How It Can Make Us
 
-### Implenmentation Process
+  As a B2B conmmerce, with QRTailor's target consumers being large retail/clothing stores (e.g. Nike), our app narrows the information gap between the employees and the business, and allows information about the products to be transparent through employees. This makes QRTailor appealing to businesses as it targets their wants and provide unique benefits:
 
-
-
-
-
-### Idea Potential
-
-
-
-
-
+* Businesses are able to be viewed as honest companies with the use of this product, helping them maintain and promote corporate social responsibility.
+* This also shows that businesses are actually putting the customer first. The businesses are likely increase revenue as better customer service and easier shopping for the customer results in larger customer base
