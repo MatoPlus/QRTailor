@@ -1,6 +1,6 @@
 ##  QRTailor
 
-![QRTAILOR (1)](/Users/ding/Downloads/QRTAILOR (1).PNG)QR Code scanner app to extract additional information from a specific product regarding its feature (e.g. stock number, availability)
+![Logo](img/QRTailor.png)QR Code scanner app to extract additional information from a specific product regarding its feature (e.g. stock number, availability)
 
 ### Unsatisfied Customer Needs
 
