@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
 
         String[] items = new String[]{"Hollister", "Nike", "Tommy Hilfiger"};
 
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
 
+=======
+>>>>>>> 0f58a16279ee11c952f740ace40bb79133924fb5
         initComponents();
     }
 
