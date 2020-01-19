@@ -16,15 +16,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initComponents(){
         findViewById(R.id.buttonTakePicture).setOnClickListener(this);
-        findViewById(R.id.buttonScanBarcode).setOnClickListener(this);
+//        findViewById(R.id.buttonScanBarcode).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.buttonScanBarcode:
-                startActivity(new Intent(this,ScannerBarcodeActivity.class));
-                break;
+//            case R.id.buttonScanBarcode:
+//                startActivity(new Intent(this,ScannerBarcodeActivity.class));
+//                break;
             case R.id.buttonTakePicture:
                 startActivity(new Intent(this,PictureBarcodeActivity.class));
                 break;

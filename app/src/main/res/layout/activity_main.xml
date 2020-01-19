@@ -14,23 +14,29 @@
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
         >
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"/>
         <Button
             android:id="@+id/buttonTakePicture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/take_barcode_picture" />
-        <Button
-            android:id="@+id/buttonScanBarcode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/scan_barcode" />
+<!--        <Button-->
+<!--            android:id="@+id/buttonScanBarcode"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:text="@string/scan_barcode" />-->
 
         <TextView
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="QR code scanned results automatically copied to your clipboard, you just paste it in the browser or use it in any place where ever you want!"
+            android:text="@string/intro"
             />
     </LinearLayout>
 </RelativeLayout>
