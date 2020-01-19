@@ -435,7 +435,7 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url ="http://10.35.129.199:5000/products";
+            String url ="http://10.37.132.191:5000/products";
 
             // Request a string response from the provided URL.
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -481,9 +481,9 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                                 itemStatus.setText(Html.fromHtml(text,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
                             }
                             if (colour.equals("Orange")) {
-                                text = "Status: <font color='#FFA500'>"+colour+"</font>";
+                                text = "Colour: <font color='#FFA500'>"+colour+"</font>";
                             } else {
-                                text = "Status: <font color='"+colour+"'>"+colour+"</font>";
+                                text = "Colour: <font color='"+colour+"'>"+colour+"</font>";
                             }
 
                             itemColour.setText(Html.fromHtml(text,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE);
