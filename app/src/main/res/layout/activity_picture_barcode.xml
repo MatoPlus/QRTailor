@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewResultsHeader"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Name: Blue Shoe" />
 
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/itemName"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Description: Blue Shoe" />
 
@@ -46,8 +46,8 @@
         android:id="@+id/itemQuantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/itemDescription"
-        android:layout_marginTop="30dp"
+        android:layout_below="@id/itemSize"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Quantity: Blue Shoe" />
 
@@ -56,9 +56,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/itemQuantity"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Colours: Blue" />
+
+    <TextView
+        android:id="@+id/itemReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemPrice"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="Review: 5/10" />
+
+    <TextView
+        android:id="@+id/itemStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemReview"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="Status: Available Online" />
+
+    <TextView
+        android:id="@+id/itemPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemOtherColours"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="Price: $5.00" />
+
+    <TextView
+        android:id="@+id/itemSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemDescription"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="Size" />
+
+    <TextView
+        android:id="@+id/itemOtherColours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemColour"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="OtherColours" />
 
     <Button
         android:id="@+id/buttonOpenCamera"
