@@ -15,19 +15,6 @@
         android:layout_margin="10dp"
         android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
-            android:text="Search Stores" />
-
-        <Button
-            android:id="@+id/buttonTakePicture"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/take_barcode_picture" />
         <!--        <Button-->
         <!--            android:id="@+id/buttonScanBarcode"-->
         <!--            android:layout_width="match_parent"-->
@@ -35,21 +22,60 @@
         <!--            android:layout_marginTop="10dp"-->
         <!--            android:text="@string/scan_barcode" />-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/intro"
-            android:textColor="#FFFFFF"
-            android:textSize="17sp" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="-1dp"
+        android:layout_marginEnd="0dp"
         android:background="#C3F5EFEF"
         android:backgroundTint="#FFFFFF"
         android:src="@drawable/logo2" />
+
+    <Button
+        android:id="@+id/buttonTakePicture"
+        android:layout_width="375dp"
+        android:layout_height="65dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="#FFFFFF"
+        android:shadowColor="#E6000000"
+        android:shadowDx="100"
+        android:shadowDy="100"
+        android:shadowRadius="10"
+        android:text="@string/take_barcode_picture"
+        android:textAlignment="center"
+        android:textColor="#054875"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="375dp"
+        android:layout_height="65dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="374dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:backgroundTint="#FFFFFF"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="448dp"
+        android:text="Select your store and scan an item for product details!"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 </RelativeLayout>
