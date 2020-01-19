@@ -499,7 +499,7 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                                     text += "<font color='" + colourList[i] + "'>" + colourList[i] + "</font>, ";
                                 }
                             }
-                            if (colour.equals("Orange")) {
+                            if (colourList[colourList.length-1].equals("Orange")) {
                                 text += "<font color='#FFA500'>" + colourList[colourList.length-1] + "</font>";
                             }
                             else {
