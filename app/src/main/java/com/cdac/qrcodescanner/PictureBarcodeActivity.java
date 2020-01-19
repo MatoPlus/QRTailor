@@ -1,7 +1,6 @@
 package com.cdac.qrcodescanner;
 
 import android.Manifest;
-import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -56,7 +55,7 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
     }
 
     private void initComponents(){
-        textViewResultBody = findViewById(R.id.textViewResultsBody);
+        textViewResultBody = findViewById(R.id.itemName);
         imageView = findViewById(R.id.imageView);
         findViewById(R.id.buttonOpenCamera).setOnClickListener(this);
 
@@ -149,6 +148,22 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
         }
     }
 
+    private String getName(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String name = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("name");
+            Log.i("json", name);
+            return name;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
     private String getDescription(String response, String manufacturer, String itemID) {
 
         try {
@@ -165,18 +180,34 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
     }
 
-    private String getColour(String response, String manufacturer, String itemID) {
+    private String getQuantity(String response, String manufacturer, String itemID) {
 
         try {
             JSONObject obj = new JSONObject(response);
-            String description = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("colour");
-            Log.i("json", description);
-            return description;
+            String quantity = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("quantity");
+            Log.i("json", quantity);
+            return quantity;
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
-        
+
+        return "";
+
+    }
+
+    private String getColour(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String colour = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("colour");
+            Log.i("json", colour);
+            return colour;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return "";
 
     }
@@ -235,11 +266,10 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
             Log.i("test", "Entered");
 
+            final TextView itemName = findViewById(R.id.itemName);
             final TextView itemDescription = findViewById(R.id.itemDescription);
-//            final TextView itemQuantity = findViewById(R.id.itemDescription);
-//            final TextView itemColour = findViewById(R.id.itemDescription);
-//            final TextView itemDescription = findViewById(R.id.itemDescription);
-
+            final TextView itemQuantity = findViewById(R.id.itemQuantity);
+            final TextView itemColour = findViewById(R.id.itemColour);
 
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -252,7 +282,10 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                         public void onResponse(String response) {
                             // Display the first 500 characters of the response string.
                             Log.i("test", "Response is: "+ response.substring(0,500));
-                            itemDescription.setText(getDescription(response, "hollister", "0"));
+                            itemName.setText("Name: " + getName(response, "hollister", "0"));
+                            itemDescription.setText("Description: " + getDescription(response, "hollister", "0"));
+                            itemQuantity.setText("Quantity: " + getQuantity(response, "hollister", "0"));
+                            itemColour.setText("Colour: " + getColour(response, "hollister", "0"));
 
 
                         }
