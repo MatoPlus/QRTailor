@@ -16,6 +16,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
@@ -23,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] items = new String[]{"hollister", "nike", "tommyHilfiger"};
+        String[] items = new String[]{"Hollister", "Nike", "Tommy Hilfiger"};
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -35,10 +40,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.i("test", "Response is: "+ response.substring(0,500));
-
-
-
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            Iterator<String> keys = obj.keys();
+                            Log.i("test", keys.next());
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -46,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i("test", "Didn't work");
             }
         });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
 
         //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.spinner);
