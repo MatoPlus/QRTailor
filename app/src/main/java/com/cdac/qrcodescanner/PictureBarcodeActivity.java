@@ -1,7 +1,6 @@
 package com.cdac.qrcodescanner;
 
 import android.Manifest;
-import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -34,6 +33,8 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.squareup.picasso.Picasso;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import org.json.*;
@@ -47,16 +48,25 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private static final int CAMERA_REQUEST = 101;
     private static final String TAG = "QR_CODE_SCANNER";
+    private String manufacturer;
+    private String decodedID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture_barcode);
+
+        // Get variables from main activity, where this activity is called.
+        Intent intent = getIntent();
+
+        // Save appropriate variables retrieved from main to display current user settings.
+        manufacturer = intent.getStringExtra("manufacturer");
+
         initComponents();
     }
 
     private void initComponents(){
-        textViewResultBody = findViewById(R.id.textViewResultsBody);
+        textViewResultBody = findViewById(R.id.itemName);
         imageView = findViewById(R.id.imageView);
         findViewById(R.id.buttonOpenCamera).setOnClickListener(this);
 
@@ -149,6 +159,22 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
         }
     }
 
+    private String getName(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String name = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("name");
+            Log.i("json", name);
+            return name;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
     private String getDescription(String response, String manufacturer, String itemID) {
 
         try {
@@ -165,23 +191,57 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
     }
 
-    private String getColour(String response, String manufacturer, String itemID) {
+    private String getQuantity(String response, String manufacturer, String itemID) {
 
         try {
             JSONObject obj = new JSONObject(response);
-            String description = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("colour");
-            Log.i("json", description);
-            return description;
+            String quantity = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("quantity");
+            Log.i("json", quantity);
+            return quantity;
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
-        
+
+        return "";
+
+    }
+
+
+    private String getColour(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String colour = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("colour");
+            Log.i("json", colour);
+            return colour;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
+    private String getImageURL(String response, String manufacturer, String itemID) {
+
+        try {
+            JSONObject obj = new JSONObject(response);
+            String imageURL = obj.getJSONArray(manufacturer).getJSONObject(0).getJSONArray(itemID).getJSONObject(0).getString("image");
+            Log.i("json", imageURL);
+            return imageURL;
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return "";
 
     }
 
     private void setBarCode(SparseArray<Barcode> barCodes){
+
         if (barCodes.size() == 0) {
             textViewResultBody.setText("No barcode could be detected. Please try again.");
             return;
@@ -189,6 +249,7 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
         for (int index = 0; index < barCodes.size(); index++) {
             Barcode code = barCodes.valueAt(index);
             textViewResultBody.setText(code.displayValue);
+            decodedID = code.displayValue;
             copyToClipBoard(code.displayValue);
             int type = barCodes.valueAt(index).valueFormat;
             switch (type) {
@@ -235,11 +296,10 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
             Log.i("test", "Entered");
 
+            final TextView itemName = findViewById(R.id.itemName);
             final TextView itemDescription = findViewById(R.id.itemDescription);
-//            final TextView itemQuantity = findViewById(R.id.itemDescription);
-//            final TextView itemColour = findViewById(R.id.itemDescription);
-//            final TextView itemDescription = findViewById(R.id.itemDescription);
-
+            final TextView itemQuantity = findViewById(R.id.itemQuantity);
+            final TextView itemColour = findViewById(R.id.itemColour);
 
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -252,8 +312,11 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
                         public void onResponse(String response) {
                             // Display the first 500 characters of the response string.
                             Log.i("test", "Response is: "+ response.substring(0,500));
-                            itemDescription.setText(getDescription(response, "hollister", "0"));
-
+                            itemName.setText("Name: " + getName(response, manufacturer, decodedID));
+                            itemDescription.setText("Description: " + getDescription(response, manufacturer, decodedID));
+                            itemQuantity.setText("Quantity: " + getQuantity(response, manufacturer, decodedID));
+                            itemColour.setText("Colour: " + getColour(response, manufacturer, decodedID));
+                            Picasso.get().load(getImageURL(response, manufacturer, decodedID)).into(imageView);
 
                         }
                     }, new Response.ErrorListener() {

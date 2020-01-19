@@ -3,7 +3,17 @@ package com.cdac.qrcodescanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,33 +30,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String[] items = new String[]{"Hollister", "Nike", "Tommy Hilfiger"};
 
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.35.129.199:5000/products";
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            Iterator<String> keys = obj.keys();
-                            Log.i("test", keys.next());
-                        }
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("test", "Didn't work");
-            }
-        });
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+//        RequestQueue queue = Volley.newRequestQueue(this);
+//        String url ="http://10.35.129.199:5000/products";
+//
+//        // Request a string response from the provided URL.
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        // Display the first 500 characters of the response string.
+//                        try {
+//                            JSONObject obj = new JSONObject(response);
+//                            Iterator<String> keys = obj.keys();
+//                            Log.i("test", keys.next());
+//                        }
+//                        catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.i("test", "Didn't work");
+//            }
+//        });
+//
+//        // Add the request to the RequestQueue.
+//        queue.add(stringRequest);
 
         //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.spinner);
@@ -74,7 +84,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                startActivity(new Intent(this,ScannerBarcodeActivity.class));
 //                break;
             case R.id.buttonTakePicture:
-                startActivity(new Intent(this,PictureBarcodeActivity.class));
+                Spinner dropdown = findViewById(R.id.spinner);
+                Log.i("initial", dropdown.getSelectedItem().toString());
+
+                Intent intent = new Intent(this,PictureBarcodeActivity.class);
+                intent.putExtra("manufacturer", dropdown.getSelectedItem().toString());
+
+                startActivity(intent);
                 break;
         }
     }
