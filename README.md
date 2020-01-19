@@ -1,5 +1,6 @@
 ##  QRTailor
 ![Logo](img/QRTailor.png)
+
 QR Code scanner app to extract additional information from a specific product regarding its feature (e.g. stock number, availability)
 
 ### What It Is
