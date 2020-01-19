@@ -29,34 +29,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         String[] items = new String[]{"Hollister", "Nike", "Tommy Hilfiger"};
 
-        // Instantiate the RequestQueue.
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        String url ="http://10.35.129.199:5000/products";
-//
-//        // Request a string response from the provided URL.
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        // Display the first 500 characters of the response string.
-//                        try {
-//                            JSONObject obj = new JSONObject(response);
-//                            Iterator<String> keys = obj.keys();
-//                            Log.i("test", keys.next());
-//                        }
-//                        catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.i("test", "Didn't work");
-//            }
-//        });
-//
-//        // Add the request to the RequestQueue.
-//        queue.add(stringRequest);
+        //Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://10.35.129.199:5000/products";
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            Iterator<String> keys = obj.keys();
+                            Log.i("test", keys.next());
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("test", "Didn't work");
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
 
         //get the spinner from the xml.
         Spinner dropdown = findViewById(R.id.spinner);

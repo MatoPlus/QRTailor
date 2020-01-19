@@ -37,7 +37,14 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.json.*;
+
 
 public class PictureBarcodeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,6 +58,22 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
     private String manufacturer;
     private String decodedID;
 
+    // Function to convert ArrayList<String> to String[]
+    public static String[] GetStringArray(ArrayList<String> arr) {
+
+        // declaration and initialise String Array
+        String str[] = new String[arr.size()];
+
+        // ArrayList to Array Conversion
+        for (int j = 0; j < arr.size(); j++) {
+
+            // Assign each value to String array
+            str[j] = arr.get(j);
+        }
+
+        return str;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +84,8 @@ public class PictureBarcodeActivity extends AppCompatActivity implements View.On
 
         // Save appropriate variables retrieved from main to display current user settings.
         manufacturer = intent.getStringExtra("manufacturer");
+
+
 
         initComponents();
     }

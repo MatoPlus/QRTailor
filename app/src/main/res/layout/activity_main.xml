@@ -7,56 +7,79 @@
     android:background="#256ABD"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
-    <!--        <Button-->
+        <!--        <Button-->
         <!--            android:id="@+id/buttonScanBarcode"-->
         <!--            android:layout_width="match_parent"-->
         <!--            android:layout_height="wrap_content"-->
         <!--            android:layout_marginTop="10dp"-->
         <!--            android:text="@string/scan_barcode" />-->
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="313dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown"
-        android:text="Search Stores" />
-
-    <Button
-        android:id="@+id/buttonTakePicture"
-        android:layout_width="294dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="52dp"
-        android:layout_marginBottom="213dp"
-        android:text="@string/take_barcode_picture" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="285dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="53dp"
-        android:layout_marginBottom="373dp"
-        android:gravity="center"
-        android:text="@string/intro"
-        android:textColor="#FFFFFF"
-        android:textSize="17sp" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
         android:background="#C3F5EFEF"
         android:backgroundTint="#FFFFFF"
         android:src="@drawable/logo2" />
+
+    <Button
+        android:id="@+id/buttonTakePicture"
+        android:layout_width="375dp"
+        android:layout_height="65dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#FFFFFF"
+        android:shadowColor="#E6000000"
+        android:shadowDx="100"
+        android:shadowDy="100"
+        android:shadowRadius="10"
+        android:text="@string/take_barcode_picture"
+        android:textAlignment="center"
+        android:textColor="#054875"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="375dp"
+        android:layout_height="65dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="374dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:backgroundTint="#FFFFFF"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="367dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="445dp"
+        android:gravity="center"
+        android:text="Select your store and scan an item for product details!"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 </RelativeLayout>
